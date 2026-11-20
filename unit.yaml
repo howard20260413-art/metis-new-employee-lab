@@ -1,0 +1,43 @@
+spec_version: "1"
+id: "new-employee-onboarding-audit"
+version: "1.0.0"
+title: "新進員工：日常作業與異常排查考核"
+tags: [linux, basics, audit, web]
+difficulty: easy
+author: "howard20260413-art"
+estimated_time: 30m
+ai_solvable: false
+egress: false
+
+containers:
+  - name: lab
+    image: ghcr.io/howard20260413-art/metis-new-employee-lab:v1.0.0
+    resources: { cpu: 0.5, memory: 256Mi }
+
+entrypoints:
+  - type: web
+    title: "新進員工辦公系統"
+    container: lab
+    port: 80
+    embed: true
+
+questions:
+  - id: q1
+    title: "階段一：連線打卡與基礎檔案整理（任務 1～5）"
+    points: 100
+    answer: "METIS-STAGE1-ONBOARD-OK"
+  - id: q2
+    title: "階段二：日誌排查、組態、備份、權限與進程（任務 6～10）"
+    points: 150
+    depends_on: [q1]
+    answer: "METIS-STAGE2-OPS-SECURE"
+  - id: q3
+    title: "階段三：定期員工考核—系統異常復原（綜合情境）"
+    points: 150
+    depends_on: [q2]
+    answer: "METIS-STAGE3-INCIDENT-FIXED"
+  - id: q4
+    title: "最終考核：提交入侵者留下的機密檔案 Flag"
+    points: 200
+    depends_on: [q3]
+    answer: "METIS{new_emp_audit_passed_2026}"

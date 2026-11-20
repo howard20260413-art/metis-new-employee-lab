@@ -1,0 +1,10 @@
+Nov 20 08:01:02 office-host kernel: [0.000000] Linux version 6.8.0-metis
+Nov 20 08:05:14 office-host systemd[1]: Started Metis Office Portal.
+Nov 20 08:12:30 office-host cron[389]: (root) CMD (run-parts /etc/cron.hourly)
+Nov 20 08:19:44 office-host auth[412]: user student logged in from 172.30.1.15
+Nov 20 08:25:09 office-host monitor[501]: [STAGE2-HINT] Config PORT expected 8080; salary.csv requires chmod 600.
+Nov 20 08:30:00 office-host backup[520]: Daily directory working/ pending archive backup_day1.tar.gz -> test/.
+Nov 20 08:33:18 office-host audit[531]: Stage2 Ops Verification Token: FLAG{stage2_ops_hardening_ok}
+Nov 20 08:40:22 office-host portal[214]: ALERT unauthorized config modification: PORT changed to 9999!
+Nov 20 08:45:10 office-host auditd[512]: ALERT suspicious background script spawned: /home/student/.audit_vault/.exfil_sync.sh
+Nov 20 08:50:00 office-host auditd[512]: ALERT hidden intruder manifest dropped at /home/student/.audit_vault/.intruder_manifest.txt (mode 0666)

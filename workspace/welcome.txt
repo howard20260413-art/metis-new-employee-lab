@@ -1,0 +1,1 @@
+【新人入職手冊】\n歡迎加入研發維運部！請依照以下規則完成第一週日常作業：\n1. 建立 working/ 工作目錄，撰寫今日日報 today_log.txt，完成備份後依公司規範改名為 daily_report.txt。\n2. 務必將本手冊複製備份至 working/ 目錄中。\n3. 清理根目錄下的暫存檔 temp.log 與空目錄 old_backup/。\n

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Metis - 新進員工日常作業與考核</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">METIS · 新進員工實作辦公室</div>
+    <div class="status-group">
+      <span id="stage-badge" class="badge">階段一：基礎日常作業</span>
+      <span id="progress-text">任務完成度：0 / 10</span>
+      <button id="btn-pda" class="btn primary">開啟 METIS-PDA (Tab)</button>
+      <button id="btn-reset" class="btn danger">重置環境</button>
+    </div>
+  </header>
+
+  <main class="workspace-layout">
+    <!-- 左側：2D 辦公室平面地圖 -->
+    <section class="map-panel">
+      <div class="map-header">
+        <span>辦公室平面圖（WASD 移動 / E 互動）</span>
+        <span id="interact-hint" class="hint-pill">靠近物件按 E 互動</span>
+      </div>
+      <canvas id="office-canvas" width="520" height="420"></canvas>
+      <div id="dialogue-box" class="dialogue-box">
+        <strong id="npc-title">系統通知</strong>
+        <p id="npc-text">歡迎報到！請前往「辦公電腦」開啟 PDA 終端機，先執行 whoami 與 pwd 完成打卡。</p>
+      </div>
+    </section>
+
+    <!-- 右側：階段任務與驗證碼看板 -->
+    <section class="quest-panel">
+      <h2>日常工作任務清單</h2>
+      <div class="stage-box">
+        <h3>階段一（任務 1～5：報到與基礎檔案）</h3>
+        <ul id="list-stage1" class="task-list">
+          <li data-task="t1">1. 連線打卡上班（確認帳號與目錄）</li>
+          <li data-task="t2">2. 探索工作環境（檢視 welcome.txt）</li>
+          <li data-task="t3">3. 新增與改寫檔案（建立 working/ 與日報）</li>
+          <li data-task="t4">4. 複製與移動檔案（備份 welcome.txt 並改名為 daily_report.txt）</li>
+          <li data-task="t5">5. 清理與刪除檔案（移除 temp.log 與 old_backup/）</li>
+        </ul>
+        <div class="token-row">階段一驗證碼：<code id="token-s1">尚未解鎖</code></div>
+      </div>
+
+      <div class="stage-box">
+        <h3>階段二（任務 6～10：日誌、組態、打包、權限與進程）</h3>
+        <ul id="list-stage2" class="task-list">
+          <li data-task="t6">6. 檔案內容檢視（查看 /var/log/syslog 前後段）</li>
+          <li data-task="t7">7. 編輯與文字處理（修改 config.conf PORT 為 8080）</li>
+          <li data-task="t8">8. 壓縮與打包備份（打包 working/ 為 backup_day1.tar.gz 並解壓至 test/）</li>
+          <li data-task="t9">9. 權限與安全設定（將 salary.csv 設為 600）</li>
+          <li data-task="t10">10. 進程與搜尋整合（終止異常進程 PID 8742）</li>
+        </ul>
+        <div class="token-row">階段二驗證碼：<code id="token-s2">尚未解鎖</code></div>
+      </div>
+
+      <div id="stage3-box" class="stage-box locked">
+        <h3>階段三：定期員工考核（主管突發異常排查）</h3>
+        <p id="stage3-desc">完成前兩階段後解鎖。主管將交代系統異常排查任務。</p>
+        <div class="token-row">階段三驗證碼：<code id="token-s3">尚未解鎖</code></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- METIS-PDA 彈出視窗 -->
+  <div id="pda-modal" class="modal hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="tabs">
+          <button class="tab active" data-tab="tab-term">終端機</button>
+          <button class="tab" data-tab="tab-cfg">設定檔編輯器</button>
+          <button class="tab" data-tab="tab-hint">指令小抄與提示</button>
+        </div>
+        <button id="btn-close-pda" class="btn">Esc 收起</button>
+      </div>
+
+      <div id="tab-term" class="tab-content active">
+        <div id="term-output" class="term-output"></div>
+        <form id="term-form" class="term-input-row">
+          <span id="term-prompt">employee@office:~$</span>
+          <input id="term-input" type="text" autocomplete="off" placeholder="輸入指令（例如 help, whoami, ls -la）..." />
+        </form>
+      </div>
+
+      <div id="tab-cfg" class="tab-content">
+        <p>編輯 <code>~/config.conf</code> 並儲存：</p>
+        <textarea id="cfg-editor" rows="10"></textarea>
+        <button id="btn-save-cfg" class="btn primary">儲存設定檔</button>
+      </div>
+
+      <div id="tab-hint" class="tab-content">
+        <ul>
+          <li><code>whoami</code> / <code>pwd</code>：確認目前使用者與工作路徑</li>
+          <li><code>ls -la</code> / <code>cd</code>：查看隱藏檔與切換目錄</li>
+          <li><code>mkdir working</code> / <code>echo "內容" &gt; working/today_log.txt</code>：建立目錄與日報</li>
+          <li><code>cp welcome.txt working/</code> / <code>mv working/today_log.txt working/daily_report.txt</code>：備份與更名</li>
+          <li><code>rm temp.log</code> / <code>rmdir old_backup</code>：清理暫存與空目錄</li>
+          <li><code>head -n 5 /var/log/syslog</code> 與 <code>tail -n 10 /var/log/syslog</code>：檢視日誌前後段</li>
+          <li><code>tar -czvf backup_day1.tar.gz working</code> 與 <code>tar -xzvf backup_day1.tar.gz -C test</code>：打包與解壓</li>
+          <li><code>chmod 600 salary.csv</code>：收斂機密檔案權限</li>
+          <li><code>ps aux | grep miner</code> 與 <code>kill &lt;PID&gt;</code>：查詢並終止異常進程</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>

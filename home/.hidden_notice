@@ -1,0 +1,3 @@
+【內部稽核備忘】
+階段一日常整理完成確認碼：FLAG{stage1_onboard_clean_ok}
+提示：系統日誌位於 /var/log/office/syslog，請務必使用 head 與 tail 完整檢視。

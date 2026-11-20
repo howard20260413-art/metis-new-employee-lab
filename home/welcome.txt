@@ -1,0 +1,20 @@
+【新人入職與日常維運手冊】
+歡迎加入研發維運部！請依照公司 SOP 完成以下日常作業（任務 1～10）：
+
+[階段一：基礎檔案與目錄整理]
+1. 確認目前登入帳號（whoami）與家目錄路徑（pwd）。
+2. 探索家目錄與隱藏檔案（ls -la），閱讀本手冊與注意事項。
+3. 建立 working/ 工作目錄，在其中建立今日工作日誌 today_log.txt 並寫入工作紀錄。
+4. 將 welcome.txt 複製備份至 working/，並將 working/today_log.txt 依規範改名為 daily_report.txt。
+5. 清理家目錄下無用的暫存檔 temp.log 與空目錄 old_backup/。
+
+[階段二：日誌、組態、備份、權限與進程維運]
+6. 檢視系統日誌 /var/log/office/syslog 的前段（head）與後段（tail）紀錄，找出異常線索。
+7. 依日誌提示，修改 ~/config.conf 中的服務連接埠 PORT 為 8080。
+8. 將 working/ 目錄打包壓縮為 backup_day1.tar.gz，並解壓縮至新建的 test/ 目錄進行還原驗證。
+9. 將機密薪資表 salary.csv 的檔案權限收斂為僅擁有者可讀寫（600）。
+10. 檢查目前背景執行中的進程（ps aux），終止異常腳本進程（.exfil_sync.sh）。
+
+[階段三：定期員工考核—入侵異常排查]
+完成上述日常維運後，請根據 /var/log/office/syslog 末段紀錄的入侵線索，找出隱藏在系統中的機密檔案，
+確認系統設定與權限均已修復收斂，並取得入侵者留下的聲明 FLAG！
